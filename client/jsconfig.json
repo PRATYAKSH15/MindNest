@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"]
+}
+// This is a jsconfig.json file for a JavaScript project using Vite and React.
+// It sets the base URL for module resolution and defines path aliases for cleaner imports. 

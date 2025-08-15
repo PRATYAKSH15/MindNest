@@ -42,12 +42,13 @@
 // export default App;
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
-import Home from "./pages/Home.jsx";
+import LandingPage from "./pages/LandingPage.jsx"; // ✅ New Landing Page
+import Home from "./pages/Home.jsx"; // Will now serve as articles list
 import ArticleDetail from "./pages/ArticleDetail.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
-import { Toaster } from "sonner"; // ✅ Use Sonner instead of ShadCN toaster
+import { Toaster } from "sonner"; // ✅ Sonner toaster
 
 export default function App() {
   return (
@@ -55,8 +56,16 @@ export default function App() {
       <Navbar />
       <main className="container mx-auto px-4 py-6">
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* ✅ Landing Page is now default */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Articles listing page */}
+          <Route path="/articles" element={<Home />} />
+
+          {/* Article details */}
           <Route path="/article/:id" element={<ArticleDetail />} />
+
+          {/* Admin Dashboard */}
           <Route
             path="/admin"
             element={
@@ -77,11 +86,14 @@ export default function App() {
               </>
             }
           />
+
+          {/* Not Found */}
           <Route path="/404" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
-      {/* ✅ Sonner toaster for notifications */}
+
+      {/* ✅ Sonner toaster */}
       <Toaster richColors position="top-right" />
     </div>
   );

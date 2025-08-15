@@ -17,30 +17,67 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b bg-card">
-      <div className="container mx-auto px-4 py-3 flex items-center gap-4">
-        <Link to="/" className="font-bold text-lg">🧠 MindNest</Link>
+    <header className="bg-white border-b shadow-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex items-center gap-6">
+        
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-gray-900 font-bold text-xl tracking-tight hover:text-gray-700 transition-colors"
+        >
+          🧠 MindNest
+        </Link>
 
-        <form onSubmit={onSearch} className="flex-1 max-w-xl flex items-center gap-2">
+        {/* Search Bar */}
+        {/* <form
+          onSubmit={onSearch}
+          className="flex-1 max-w-xl flex items-center gap-2"
+        >
           <Input
             placeholder="Search articles (e.g. anxiety, sleep, mindfulness)"
             value={q}
             onChange={(e) => setQ(e.target.value)}
+            className="bg-gray-50 border-gray-300 focus-visible:ring-1 focus-visible:ring-blue-500"
           />
-          <Button type="submit">Search</Button>
-        </form>
+          <Button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+          >
+            Search
+          </Button>
+        </form> */}
 
-        <nav className="flex items-center gap-3">
-          <Link to="/" className={pathname === "/" ? "underline" : ""}>Browse</Link>
+        {/* Navigation */}
+        <nav className="flex items-center gap-5 text-gray-700 font-medium">
+          <Link
+            to="/articles"
+            className={`hover:text-blue-600 transition-colors ${
+              pathname === "/" ? "text-blue-600 font-semibold" : ""
+            }`}
+          >
+            Browse
+          </Link>
+
           <SignedIn>
-            <Link to="/admin" className={pathname === "/admin" ? "underline" : ""}>
+            <Link
+              to="/admin"
+              className={`hover:text-blue-600 transition-colors ${
+                pathname === "/admin" ? "text-blue-600 font-semibold" : ""
+              }`}
+            >
               Admin
             </Link>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
+
           <SignedOut>
             <SignInButton mode="modal">
-              <Button variant="outline">Sign In</Button>
+              <Button
+                variant="outline"
+                className="border-gray-300 hover:bg-gray-100 transition-colors"
+              >
+                Sign In
+              </Button>
             </SignInButton>
           </SignedOut>
         </nav>

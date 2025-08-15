@@ -10,9 +10,12 @@ import { Toaster } from "sonner"; // ✅ Sonner toaster
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen w-full bg-background text-foreground">
+      {/* Navbar spans full width */}
       <Navbar />
-      <main className="container mx-auto px-4 py-6">
+
+      {/* Main content area with full-width background */}
+      <main className="w-full px-4 py-6">
         <Routes>
           {/* ✅ Landing Page is now default */}
           <Route path="/" element={<LandingPage />} />

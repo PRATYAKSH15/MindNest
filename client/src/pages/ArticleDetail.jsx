@@ -36,30 +36,47 @@ export default function ArticleDetail() {
     }
   };
 
-  if (loading) return <p className="opacity-70">Loading...</p>;
-  if (!article) return <p>Article not found.</p>;
+  if (loading) return <p className="text-center text-gray-500 mt-10">Loading article...</p>;
+  if (!article) return <p className="text-center text-red-500 mt-10">Article not found.</p>;
 
   return (
-    <div className="grid gap-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold">{article.title}</h1>
-          <div className="text-sm opacity-70">By {article.author ?? "Admin"}</div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {(article.tags ?? []).map((t) => <Badge key={t} variant="secondary">#{t}</Badge>)}
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 md:p-10 space-y-8">
+      
+      {/* Header Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+          
+          {/* Title & Info */}
+          <div>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">{article.title}</h1>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              By <span className="font-medium">{article.author ?? "Admin"}</span>
+            </div>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {(article.tags ?? []).map((t) => (
+                <Badge key={t} variant="secondary" className="text-sm">#{t}</Badge>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <BookmarkButton articleId={article._id} onChange={() => {}} />
-          <Button variant="outline" onClick={share}>Share</Button>
+
+          {/* Actions */}
+          <div className="flex gap-2 mt-3 md:mt-0">
+            <BookmarkButton articleId={article._id} onChange={() => {}} />
+            <Button variant="outline" onClick={share}>Share</Button>
+          </div>
         </div>
       </div>
 
-      <article className="prose max-w-none dark:prose-invert">
+      {/* Article Content */}
+      <article className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 prose max-w-none dark:prose-invert transition-all duration-300">
         <p style={{ whiteSpace: "pre-wrap" }}>{article.content}</p>
       </article>
 
-      <CommentBox articleId={article._id} />
+      {/* Comments */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
+        <CommentBox articleId={article._id} />
+      </div>
+
     </div>
   );
 }

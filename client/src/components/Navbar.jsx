@@ -55,6 +55,24 @@ export default function Navbar() {
               pathname === "/" ? "text-blue-600 font-semibold" : ""
             }`}
           >
+            About us
+          </Link>
+
+          <Link
+            to="/articles"
+            className={`hover:text-blue-600 transition-colors ${
+              pathname === "/" ? "text-blue-600 font-semibold" : ""
+            }`}
+          >
+            Why need us
+          </Link>
+
+          <Link
+            to="/articles"
+            className={`hover:text-blue-600 transition-colors ${
+              pathname === "/" ? "text-blue-600 font-semibold" : ""
+            }`}
+          >
             Browse
           </Link>
 

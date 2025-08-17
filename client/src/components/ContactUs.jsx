@@ -41,7 +41,7 @@ export default function ContactUs() {
   return (
     <section className="py-20 bg-muted" id="contact">
       <div className="container mx-auto px-6 max-w-3xl text-center">
-        <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
+        <h2 className="text-3xl font-bold mb-4">Feel free to Contact Us 😀</h2>
         <p className="text-muted-foreground mb-8">
           Have feedback, suggestions, or just want to say hello? Fill out the
           form below — we’d love to hear from you.

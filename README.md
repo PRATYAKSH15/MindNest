@@ -1,6 +1,7 @@
 # 🧠 MindNest — Your Mental Health Companion
 
-![MindNest Preview](Home.png)
+![MindNest Preview](HOME.png)
+![About Us](HOME1.png)
 
 MindNest is a curated hub of **self-help resources**, **community discussions**, and **mindful living guides**.  
 We connect people with the tools they need to improve emotional well-being and **break the stigma** around mental health.
@@ -44,3 +45,4 @@ We connect people with the tools they need to improve emotional well-being and *
 ```bash
 git clone https://github.com/PRATYAKSH15/MindNest.git
 cd mindnest
+

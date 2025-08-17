@@ -21,8 +21,8 @@ export const requireAuth = async (req, res, next) => {
     });
 
     req.auth = {
-      userId: decoded.sub,
-      email: decoded.email,
+      userId: decoded.sub,   // Clerk user id
+      email: decoded.email,  // Optional
     };
 
     next();

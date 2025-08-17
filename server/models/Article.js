@@ -16,8 +16,12 @@ const articleSchema = new mongoose.Schema(
       default: [],
     },
     author: {
-      type: String,
-      default: "Admin",
+      type: String, // Display name
+      default: "Anonymous",
+    },
+    authorId: {
+      type: String, // Clerk userId
+      required: true,
     },
     createdAt: {
       type: Date,

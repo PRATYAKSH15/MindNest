@@ -1,10 +1,19 @@
 import Article from '../models/Article.js';
 
-// Create article (admin only)
+// Create article (any logged-in user)
 export const createArticle = async (req, res) => {
   try {
-    const { title, content, tags, author } = req.body;
-    const article = await Article.create({ title, content, tags, author });
+    const { title, content, tags } = req.body;
+    const { userId, email } = req.auth; // from Clerk middleware
+
+    const article = await Article.create({
+      title,
+      content,
+      tags,
+      author: email,  // save email/display name
+      authorId: userId,
+    });
+
     res.status(201).json(article);
   } catch (err) {
     res.status(500).json({ error: 'Failed to create article' });
@@ -21,7 +30,7 @@ export const getAllArticles = async (req, res) => {
   }
 };
 
-// Get articles by tag or search query
+// Search articles by tag or query
 export const searchArticles = async (req, res) => {
   try {
     const { tag, q } = req.query;
@@ -37,7 +46,7 @@ export const searchArticles = async (req, res) => {
   }
 };
 
-// Get single article by ID
+// Get single article
 export const getArticleById = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
@@ -48,24 +57,34 @@ export const getArticleById = async (req, res) => {
   }
 };
 
-// Update article (admin only)
+// Update article (only owner)
 export const updateArticle = async (req, res) => {
   try {
-    const updated = await Article.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const article = await Article.findById(req.params.id);
+    if (!article) return res.status(404).json({ error: 'Article not found' });
+
+    if (article.authorId !== req.auth.userId) {
+      return res.status(403).json({ error: 'Not authorized to update this article' });
+    }
+
+    const updated = await Article.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: 'Failed to update article' });
   }
 };
 
-// Delete article (admin only)
+// Delete article (only owner)
 export const deleteArticle = async (req, res) => {
   try {
-    await Article.findByIdAndDelete(req.params.id);
+    const article = await Article.findById(req.params.id);
+    if (!article) return res.status(404).json({ error: 'Article not found' });
+
+    if (article.authorId !== req.auth.userId) {
+      return res.status(403).json({ error: 'Not authorized to delete this article' });
+    }
+
+    await article.deleteOne();
     res.json({ message: 'Article deleted' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete article' });

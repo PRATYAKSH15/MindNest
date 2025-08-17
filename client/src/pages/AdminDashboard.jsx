@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../providers/ApiProvider";
+import { useUser } from "@clerk/clerk-react"; // ✅ get logged in user
 import ArticleForm from "../components/ArticleForm.jsx";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,15 +22,18 @@ import { Loader2, Plus, Pencil, Trash2 } from "lucide-react";
 
 export default function AdminDashboard() {
   const api = useApi();
+  const { user } = useUser(); // ✅ Clerk logged-in user
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
+    if (!user) return; // wait for user
     setLoading(true);
     try {
-      const { data } = await api.get("/api/articles");
+      // ✅ only fetch this user's articles
+      const { data } = await api.get(`/api/articles?author=${user.id}`);
       setArticles(data);
     } finally {
       setLoading(false);
@@ -38,12 +42,13 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     load();
-  }, []);
+  }, [user]);
 
   const create = async (payload) => {
     setSaving(true);
     try {
-      await api.post("/api/articles", payload);
+      // ✅ always include current user as author
+      await api.post("/api/articles", { ...payload, author: user.id });
       await load();
       setEditing(null);
     } finally {
@@ -54,7 +59,7 @@ export default function AdminDashboard() {
   const update = async (id, payload) => {
     setSaving(true);
     try {
-      await api.put(`/api/articles/${id}`, payload);
+      await api.put(`/api/articles/${id}`, { ...payload, author: user.id });
       await load();
       setEditing(null);
     } finally {
@@ -70,30 +75,22 @@ export default function AdminDashboard() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] 
-                 bg-[size:40px_40px]"
-      />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Page content (kept above background) */}
       <div className="relative max-w-6xl mx-auto px-6 py-10 space-y-8">
         <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border p-6 space-y-8">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                Admin Dashboard
+                My Articles
               </h1>
               <p className="text-sm text-muted-foreground">
-                Manage and organize your articles
+                Manage and organize only your own articles
               </p>
             </div>
 
-            <Dialog
-              open={!!editing}
-              onOpenChange={(o) => !o && setEditing(null)}
-            >
+            <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
               <DialogTrigger asChild>
                 <Button
                   onClick={() => setEditing({})}

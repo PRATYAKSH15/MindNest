@@ -8,8 +8,7 @@ import {
   searchArticles
 } from '../controllers/articleController.js';
 
-// Clerk middleware (to be added later)
-// import { requireAdmin } from '../middleware/auth.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -18,9 +17,9 @@ router.get('/', getAllArticles);
 router.get('/search', searchArticles);
 router.get('/:id', getArticleById);
 
-// Admin Routes (protected)
-router.post('/', createArticle);
-router.put('/:id', updateArticle);
-router.delete('/:id', deleteArticle);
+// Protected Routes
+router.post('/', requireAuth, createArticle);
+router.put('/:id', requireAuth, updateArticle);
+router.delete('/:id', requireAuth, deleteArticle);
 
 export default router;

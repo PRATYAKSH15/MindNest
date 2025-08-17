@@ -43,7 +43,7 @@ export default function LandingPage() {
             </Link>
             <Link to="/admin">
               <Button size="lg" variant="outline">
-                Admin Access
+                Let's Contribute to the Community
               </Button>
             </Link>
           </div>

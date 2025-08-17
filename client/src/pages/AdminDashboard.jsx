@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../providers/ApiProvider";
 import { useUser } from "@clerk/clerk-react"; // ✅ get logged in user
+import { Link } from "react-router-dom"; // ✅ back link
 import ArticleForm from "../components/ArticleForm.jsx";
 import { Button } from "@/components/ui/button";
 import {
@@ -78,19 +79,28 @@ export default function AdminDashboard() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
       <div className="relative max-w-6xl mx-auto px-6 py-10 space-y-8">
+        {/* Back to Resources */}
+        <Link
+          to="/articles"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium mb-4 transition-colors"
+        >
+          ← Back to Resources
+        </Link>
+
         <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border p-6 space-y-8">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">
-                My Articles
-              </h1>
+              <h1 className="text-3xl font-bold tracking-tight">My Articles</h1>
               <p className="text-sm text-muted-foreground">
                 Manage and organize only your own articles
               </p>
             </div>
 
-            <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
+            <Dialog
+              open={!!editing}
+              onOpenChange={(o) => !o && setEditing(null)}
+            >
               <DialogTrigger asChild>
                 <Button
                   onClick={() => setEditing({})}

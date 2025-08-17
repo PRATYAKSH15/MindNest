@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx"; // Will now serve as articles list
 import ArticleDetail from "./pages/ArticleDetail.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import AboutPage from "./pages/AboutPage.jsx"; // 👈 Import About Page
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 import { Toaster } from "sonner"; // ✅ Sonner toaster
 
@@ -19,6 +20,9 @@ export default function App() {
         <Routes>
           {/* ✅ Landing Page is now default */}
           <Route path="/" element={<LandingPage />} />
+
+          {/* About Page */}
+          <Route path="/about" element={<AboutPage />} /> {/* 👈 Added */}
 
           {/* Articles listing page */}
           <Route path="/articles" element={<Home />} />

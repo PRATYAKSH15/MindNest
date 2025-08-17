@@ -18,13 +18,21 @@ export default function ContactUs() {
     setStatus(null);
 
     try {
-      // 👇 later connect this to your backend
-      console.log("Feedback submitted:", form);
+      const res = await fetch("http://localhost:5000/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-      setStatus("✅ Thanks for reaching out! We’ll get back to you soon.");
-      setForm({ name: "", email: "", message: "" });
+      if (res.ok) {
+        setStatus("✅ Thanks for reaching out! We’ll get back to you soon.");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        const data = await res.json();
+        setStatus(`❌ ${data.error || "Something went wrong."}`);
+      }
     } catch (err) {
-      setStatus("❌ Something went wrong. Please try again.");
+      setStatus("❌ Could not connect to server. Try again later.");
     } finally {
       setSubmitting(false);
     }
@@ -35,8 +43,8 @@ export default function ContactUs() {
       <div className="container mx-auto px-6 max-w-3xl text-center">
         <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
         <p className="text-muted-foreground mb-8">
-          Have feedback, suggestions, or just want to say hello?  
-          Fill out the form below — we’d love to hear from you.
+          Have feedback, suggestions, or just want to say hello? Fill out the
+          form below — we’d love to hear from you.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-left">

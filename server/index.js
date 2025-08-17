@@ -6,6 +6,7 @@ import cors from 'cors';
 import articleRoutes from './routes/articleRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import bookmarkRoutes from './routes/bookmarkRoutes.js';
+import feedbackRoutes from './routes/feedbackRoutes.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/articles', articleRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Root
 app.get('/', (req, res) => {

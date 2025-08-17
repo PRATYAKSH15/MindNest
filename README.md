@@ -1,6 +1,6 @@
 # 🧠 MindNest — Your Mental Health Companion
 
-![MindNest Preview](HOME.png)
+![MindNest Preview](Home.png)
 ![About Us](HOME1.png)
 
 MindNest is a curated hub of **self-help resources**, **community discussions**, and **mindful living guides**.  

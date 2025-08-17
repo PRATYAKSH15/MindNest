@@ -33,7 +33,7 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       // ✅ only fetch this user's articles
-      const { data } = await api.get(`/api/articles?author=${user.id}`);
+      const { data } = await api.get(`/api/articles?authorId=${user.id}`);
       setArticles(data);
     } finally {
       setLoading(false);

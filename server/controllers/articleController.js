@@ -21,14 +21,23 @@ export const createArticle = async (req, res) => {
 };
 
 // Get all articles (public)
+// Get all articles (public or user-specific)
 export const getAllArticles = async (req, res) => {
   try {
-    const articles = await Article.find().sort({ createdAt: -1 });
+    const { authorId } = req.query; // look for authorId filter
+    const filter = {};
+
+    if (authorId) {
+      filter.authorId = authorId; // only fetch this user's articles
+    }
+
+    const articles = await Article.find(filter).sort({ createdAt: -1 });
     res.json(articles);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch articles' });
   }
 };
+
 
 // Search articles by tag or query
 export const searchArticles = async (req, res) => {

@@ -15,16 +15,17 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigin =
-  process.env.ENVIRONEMNT === 'production'
+  process.env.ENVIRONMENT === 'production'
     ? 'https://mind-nest-nine.vercel.app'
     : 'http://localhost:5173';
 
 app.use(
   cors({
     origin: allowedOrigin,
-    credentials: true, // Allow cookies
+    credentials: true, // Allow cookies & auth headers
   })
 );
+
 app.use(express.json());
 
 // Connect to MongoDB

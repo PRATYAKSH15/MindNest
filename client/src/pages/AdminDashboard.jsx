@@ -45,11 +45,10 @@ export default function AdminDashboard() {
     load();
   }, [user]);
 
-  const create = async (payload) => {
+  const create = async (formData) => {
     setSaving(true);
     try {
-      // ✅ always include current user as author
-      await api.post("/api/articles", { ...payload, author: user.id });
+      await api.post("/api/articles", formData);
       await load();
       setEditing(null);
     } finally {
@@ -57,10 +56,10 @@ export default function AdminDashboard() {
     }
   };
 
-  const update = async (id, payload) => {
+  const update = async (id, formData) => {
     setSaving(true);
     try {
-      await api.put(`/api/articles/${id}`, { ...payload, author: user.id });
+      await api.put(`/api/articles/${id}`, formData);
       await load();
       setEditing(null);
     } finally {
@@ -143,8 +142,17 @@ export default function AdminDashboard() {
               {articles.map((a) => (
                 <Card
                   key={a._id}
-                  className="flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow"
+                  className="flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
+                  {a.imageUrl && (
+                    <div className="h-36 overflow-hidden">
+                      <img
+                        src={a.imageUrl}
+                        alt={a.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <CardTitle className="line-clamp-1">{a.title}</CardTitle>
                     <CardDescription>

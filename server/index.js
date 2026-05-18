@@ -7,6 +7,10 @@ import articleRoutes from './routes/articleRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import bookmarkRoutes from './routes/bookmarkRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
+import moodRoutes from './routes/moodRoutes.js';
+import profileRoutes from './routes/profileRoutes.js';
+import assessmentRoutes from './routes/assessmentRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
 
 dotenv.config();
 
@@ -38,6 +42,10 @@ app.use('/api/articles', articleRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/mood', moodRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/assessment', assessmentRoutes);
+app.use('/api/report', reportRoutes);
 
 // Root
 app.get('/', (req, res) => {

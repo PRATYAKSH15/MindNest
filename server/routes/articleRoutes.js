@@ -5,21 +5,21 @@ import {
   getArticleById,
   updateArticle,
   deleteArticle,
-  searchArticles
+  searchArticles,
 } from '../controllers/articleController.js';
-
 import { requireAuth } from '../middleware/auth.js';
+import upload from '../middleware/uploadMiddleware.js';
 
 const router = express.Router();
 
-// Public Routes
+// Public routes
 router.get('/', getAllArticles);
 router.get('/search', searchArticles);
 router.get('/:id', getArticleById);
 
-// Protected Routes
-router.post('/', requireAuth, createArticle);
-router.put('/:id', requireAuth, updateArticle);
+// Protected routes — upload.single('image') parses multipart/form-data
+router.post('/', requireAuth, upload.single('image'), createArticle);
+router.put('/:id', requireAuth, upload.single('image'), updateArticle);
 router.delete('/:id', requireAuth, deleteArticle);
 
 export default router;

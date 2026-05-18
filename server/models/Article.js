@@ -23,6 +23,10 @@ const articleSchema = new mongoose.Schema(
       type: String, // Clerk userId
       required: true,
     },
+    imageUrl: {
+      type: String,
+      default: '',
+    },
     createdAt: {
       type: Date,
       default: Date.now,

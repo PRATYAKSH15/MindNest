@@ -42,6 +42,17 @@ export default function ArticleDetail() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 md:p-10 space-y-8">
       
+      {/* Hero Image */}
+      {article.imageUrl && (
+        <div className="rounded-2xl overflow-hidden shadow-lg">
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            className="w-full max-h-80 object-cover"
+          />
+        </div>
+      )}
+
       {/* Header Section */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">

@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
-import CrisisBanner from "./components/CrisisBanner.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import Home from "./pages/Home.jsx";
 import ArticleDetail from "./pages/ArticleDetail.jsx";
@@ -19,7 +18,6 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <Navbar />
-      <CrisisBanner />
 
       {/* Main content area with full-width background */}
       <main className="w-full px-4 py-6">
